@@ -26,12 +26,14 @@ public class PlayListMixer {
             BufferedWriter br = Files.newBufferedWriter(filePath);
         }
         catch(IOException ioe){
-            System.out.println("Problem with Writer");
+            System.out.println("Problem with Creating the Writer");
         }
         for (String s : allTracks){
             try{
                 System.out.println(s);
-               // br.write(s);
+                
+                //guess it will just add to the file ; need to delete the previous stuff
+                br.write(s);
             }
             catch(Exception e){
                 System.out.println("Writing problem");
@@ -54,16 +56,22 @@ public class PlayListMixer {
         String[] kek;
         boolean con = true;
         try {
-            URL url = getClass().getResource(fileName);
+            URL url = getClass().getResource(fileName);     
             filePath = Paths.get(url.toURI());
+            
+            //Seems like BufferedReader is beeing created, because no exceptions are thrown
             br = Files.newBufferedReader(filePath);
+            
+            //Using a Stream to get an Array-> But kek is always empty. Why is that?
             kek = br.lines().toArray(size->new String[size]);
+            
+            //Check if something in kek-Array -> not needed but for visualization
             for (int i = 0 ; i<kek.length ; i++){
                 System.out.println(kek[i]);
             }
+            // adding every element to the allTracks ArrayList
             for (int i = 0; i<kek.length;i++) {
                 allTracks.add(kek[i]);
-                System.out.println(kek[i]);
             }
             br.close();
         }
